@@ -20,6 +20,8 @@ import android.app.PendingIntent
 import android.content.Intent
 
 
+
+
 class MainActivity : AppCompatActivity() {
 
     var hours = 1
@@ -124,16 +126,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendTestNotification(view: View) {
-        var builder = NotificationCompat.Builder(applicationContext)
+        val builder = NotificationCompat.Builder(applicationContext)
             .setChannelId("cov-19")
             .setSmallIcon(R.raw.soap)
             .setLargeIcon(BitmapFactory.decodeResource(application.resources, R.raw.hw_rnd))
             .setContentTitle(titleText.text)
             .setContentText(bodyMessage.text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val contentIntent = PendingIntent.getActivity(
+            this, 0,
+            Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        builder.setContentIntent(contentIntent)
         val mNotificationManager =
 
             getSystemService<NotificationManager>(applicationContext, NotificationManager::class.java)
+
+
 
         // notificationId is a unique int for each notification that you must define
         mNotificationManager?.notify(1, builder.build())

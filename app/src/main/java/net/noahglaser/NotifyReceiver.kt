@@ -1,6 +1,7 @@
 package net.noahglaser
 
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -44,6 +45,12 @@ class NotifyReceiver : BroadcastReceiver() {
                 .setContentTitle(sharedPreferences.getString("title", "Wash Your Hands!!! :)"))
                 .setContentText(sharedPreferences.getString("body", "And clean your phone. :)"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+            val contentIntent = PendingIntent.getActivity(
+                app, 0,
+                Intent(app, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            builder.setContentIntent(contentIntent)
             val mNotificationManager =
 
                 ContextCompat.getSystemService<NotificationManager>(
